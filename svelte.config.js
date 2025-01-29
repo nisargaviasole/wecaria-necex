@@ -1,11 +1,12 @@
-import adapter from '@sveltejs/adapter-node';
+import adapter from '@sveltejs/adapter-vercel';
+import { vitePreprocess } from '@sveltejs/kit/vite';
 
-export default {
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
   kit: {
-    adapter: adapter(),
-    alias: {
-      $lib: './src/lib',
-    }
+    adapter: adapter()
   },
-  preprocess: {}  // Or remove this line if not needed
+  preprocess: vitePreprocess()
 };
+
+export default config;

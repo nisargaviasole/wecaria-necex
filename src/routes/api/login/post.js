@@ -6,7 +6,7 @@ export async function POST({ request }) {
         const db = await connectDb();
         let latitude = data.latitude;
         let longitude = data.longitude;
-
+        console.log("data comes")
         const store_value = await db.collection('user_geolocation').insertOne({
             latitude: latitude,
             longitude: longitude
