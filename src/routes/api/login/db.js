@@ -7,7 +7,6 @@ const client = new MongoClient(uri);
 export async function connectDb() {
     try {
         await client.connect();
-        console.log("Conected to the database");
         return client.db('wecaria-nacex');
     } catch (error) {
         console.log('Error connecting to the database', error);
