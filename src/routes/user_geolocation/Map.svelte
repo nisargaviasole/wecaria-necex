@@ -24,7 +24,7 @@
   
       // Create custom SVG icon for the marker
       const customIcon = L.icon({
-        iconUrl: '/location-pin-alt-1-svgrepo-com.svg', // Path to your SVG file
+        iconUrl: '/svg/location-pin-alt-1-svgrepo-com.svg', // Path to your SVG file
         iconSize: [32, 32], // Size of the marker
         iconAnchor: [16, 32], // Anchor point (where the icon is positioned)
         popupAnchor: [0, -32], // Position of the popup relative to the marker
