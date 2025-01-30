@@ -84,7 +84,7 @@
   }
 
   :global(.leaflet-default-icon-path) {
-    background-image: url("https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png");
+    background-image: url("/static/markericon.png");
   }
 
   :global(.leaflet-control-container .leaflet-control) {
