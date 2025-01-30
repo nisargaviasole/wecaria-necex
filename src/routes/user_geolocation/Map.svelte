@@ -1,6 +1,6 @@
 <!-- src/routes/Map.svelte -->
 <script>
-// @ts-nocheck
+  // @ts-nocheck
 
   import { onMount, afterUpdate } from "svelte";
   export let locations = []; // Array of {latitude, longitude} objects
@@ -46,12 +46,51 @@
 
     // Initialize map
     if (!map) {
-      map = L.map(mapElement).setView([defaultLatitude, defaultLongitude], zoom);
+      map = L.map(mapElement).setView(
+        [defaultLatitude, defaultLongitude],
+        zoom
+      );
 
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
         attribution: "© OpenStreetMap contributors"
       }).addTo(map);
+    }
+
+    // Define a custom icon
+    const customIcon = L.icon({
+      iconUrl: "/svg/location-pin-alt-1-svgrepo-com.svg", // Path to your custom SVG
+      iconSize: [32, 32], // Set the size of your icon
+      iconAnchor: [16, 32], // Set anchor point to position the icon correctly
+      popupAnchor: [0, -32] // Adjust popup position
+    });
+
+    // Function to update all markers
+    function updateMarkers(locationArray) {
+      if (!map) return;
+
+      // Remove all existing markers
+      markers.forEach((marker) => marker.remove());
+      markers = [];
+
+      // Add new markers for each location
+      locationArray.forEach((location, index) => {
+        const marker = L.marker([location.latitude, location.longitude], {
+          icon: customIcon
+        })
+          .addTo(map)
+          .bindPopup(
+            `Location ${index + 1}: ${location.latitude}, ${location.longitude}`
+          )
+          .openPopup();
+        markers.push(marker);
+      });
+
+      // If we have locations, fit the map to show all markers
+      if (locationArray.length > 0) {
+        const group = L.featureGroup(markers);
+        map.fitBounds(group.getBounds().pad(0.1)); // 0.1 adds 10% padding around the bounds
+      }
     }
 
     // If locations are provided, show markers
@@ -81,10 +120,6 @@
     height: 400px;
     width: 100%;
     z-index: 1;
-  }
-
-  :global(.leaflet-default-icon-path) {
-    background-image: url("/svg/location-pin-alt-1-svgrepo-com.svg");
   }
 
   :global(.leaflet-control-container .leaflet-control) {
