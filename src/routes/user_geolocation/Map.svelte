@@ -84,7 +84,7 @@
   }
 
   :global(.leaflet-default-icon-path) {
-    background-image: url("/static/markericon.png");
+    background-image: url("/svg/location-pin-alt-1-svgrepo-com.svg");
   }
 
   :global(.leaflet-control-container .leaflet-control) {
