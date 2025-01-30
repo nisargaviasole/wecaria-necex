@@ -1,4 +1,4 @@
-import { connectDb } from "../db.js";
+import { connectDb } from "./db.js";
 // @ts-ignore
 export async function POST({ request }) {
   try {
