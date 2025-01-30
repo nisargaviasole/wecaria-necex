@@ -8,7 +8,7 @@
 
   onMount(async () => {
     try {
-      const response = await fetch("http://localhost:5173/api/geolocation");
+      const response = await fetch("https://wecaria-cyan.vercel.app/api/geolocation");
       if (response.ok) {
         all_value = await response.json();
         locations = all_value.data || []; // Assign data to locations
