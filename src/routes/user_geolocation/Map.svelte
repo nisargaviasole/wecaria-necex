@@ -15,8 +15,24 @@
 
   onMount(() => {
     map = new maplibregl.Map({
-      container: mapElement, // Correctly binding map to the HTML element
-      style: "https://demotiles.maplibre.org/style.json", // Free MapLibre tiles
+      container: mapElement,
+      style: {
+        version: 8,
+        sources: {
+          osm: {
+            type: "raster",
+            tiles: ["https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"],
+            tileSize: 256,
+          },
+        },
+        layers: [
+          {
+            id: "osm-layer",
+            type: "raster",
+            source: "osm",
+          },
+        ],
+      },
       center: [defaultLongitude, defaultLatitude],
       zoom: zoom,
     });
@@ -29,7 +45,6 @@
   function updateMarkers(locationArray) {
     if (!map) return;
 
-    // Remove existing markers
     markers.forEach(marker => marker.remove());
     markers = [];
 
