@@ -39,7 +39,11 @@
 
     map.addControl(new maplibregl.NavigationControl()); // Add zoom controls
 
-    updateMarkers(locations);
+    // Wait for the map to load before adding markers or circles
+    map.on("load", () => {
+      updateMarkers(locations);
+      addCircle({ latitude: 22.270428593013648, longitude: 73.19681765297314 });
+    });
   });
 
   function updateMarkers(locationArray) {
@@ -68,6 +72,41 @@
       });
       map.fitBounds(bounds, { padding: 20 });
     }
+  }
+
+  function addCircle(circleLocation) {
+    if (!map) return;
+
+    // Add a GeoJSON source for the circle
+    map.addSource("circle-source", {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: [
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [circleLocation.longitude, circleLocation.latitude],
+            },
+          },
+        ],
+      },
+    });
+
+    // Add a circle layer
+    map.addLayer({
+      id: "circle-layer",
+      type: "circle",
+      source: "circle-source",
+      paint: {
+        "circle-radius": 100, // Radius of the circle in meters
+        "circle-color": "#007BFF", // Blue color
+        "circle-opacity": 0.5, // Semi-transparent
+        "circle-stroke-width": 2, // Border width
+        "circle-stroke-color": "#0056b3", // Darker blue border
+      },
+    });
   }
 
   afterUpdate(() => {
